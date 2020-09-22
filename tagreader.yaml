@@ -17,6 +17,9 @@ esphome:
   name: $devicename
   platform: ESP8266
   board: d1_mini
+# load the ndef script   
+  includes:
+  - rfidreader/src/test.h
 
 # If buzzer is enabled, notify on api connection success
   on_boot:
@@ -106,7 +109,21 @@ output:
 rtttl:
   output: buzzer
 
-# Configure LED
+#not sure which one of these two worked 
+
+text_sensor:
+- platform: custom
+  lambda: |-
+    auto my_custom_sensor = new MyCustomTextSensor();
+    App.register_component(my_custom_sensor);
+    return {my_custom_sensor};
+  
+  
+# text_sensors:
+#   name: "My Custom Text Sensor"
+#   # update_interval 5s
+
+
 light:
 - platform: fastled_clockless
   chipset: WS2812
